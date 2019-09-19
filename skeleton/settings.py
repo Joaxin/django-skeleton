@@ -50,8 +50,8 @@ INSTALLED_APPS = [
     # 'rest_framework',
 
     # Local
-    'users',
-    'pages',
+    'users.apps.UsersConfig',
+    'pages.apps.PagesConfig',
 ]
 
 SITE_ID = 1
