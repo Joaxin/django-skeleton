@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     # Third-party admin
-    'skeleton.apps.SuitConfig',
+    'simpleui',
 
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,12 +1,12 @@
-Django==2.2.5
-django-allauth==0.39.1
-django-crispy-forms==1.7.2
-django-debug-toolbar==2.0
-django-suit==0.2.26
-# django-taggit==0.23.0
-# django-hreflang==2.2
-# django-rosetta==0.9.2
-# djangorestframework==3.9.1
+Django>=2.2.5
+django-allauth>=0.42.1
+django-crispy-forms>=1.9.1
+django-debug-toolbar>=2.2
+django-simpleui>=4.0.2
+# django-taggit>=1.3.0
+# django-hreflang>=2.2
+# django-rosetta>=0.9.2
+# djangorestframework>=3.9.1
 
 
 

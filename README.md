@@ -6,9 +6,9 @@ A template for launching new Django projects quickly.
 
 Comes with a complete user authentication flow, custom user model, and social authentication options via Gmail, Facebook, Twitter, etc.
 
-- For Django 2.2 and Python 3.7
+- For Django>=2.2 and Python>=3.7
 
-- Styling with Bootstrap v4.3.1 : https://github.com/twbs/bootstrap
+- Styling with Bootstrap v4.5.0 : https://github.com/twbs/bootstrap
 
 - Custom user model
 
@@ -20,12 +20,7 @@ Comes with a complete user authentication flow, custom user model, and social au
 
 - django-debug-toolbar : https://github.com/jazzband/django-debug-toolbar
 
-- support for django-suit  admin
-
-  ```
-  # for v2
-  pip install https://github.com/darklow/django-suit/tarball/v2
-  ```
+- support for ~~django-suit~~  django-simpleui
 
 - Support fontawesome 5.1: https://fontawesome.com/icons?d=gallery&q=cat&m=free
 
