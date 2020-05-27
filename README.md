@@ -2,6 +2,14 @@
 
 A template for launching new Django projects quickly. 
 
+## Screenshots
+
+![main](shots/main.png)
+
+![sign_up](shots/sign_up.png)
+
+![admin](shots/admin.png)
+
 ## Features
 
 Comes with a complete user authentication flow, custom user model, and social authentication options via Gmail, Facebook, Twitter, etc.
