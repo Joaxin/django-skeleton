@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Places</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="place">
+  <!-- bootstap -->
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+  <!-- boostrap css -->
+  <style>
+    /* Absolute Center Spinner */
+    .loading {
+      position: fixed;
+      z-index: 999;
+      height: 2em;
+      width: 2em;
+      overflow: show;
+      margin: auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    /* Transparent Overlay */
+    .loading:before {
+      content: '';
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    /* :not(:required) hides these rules from IE9 and below */
+    .loading:not(:required) {
+      /* hide "loading..." text */
+      font: 0/0 a;
+      color: transparent;
+      text-shadow: none;
+      background-color: transparent;
+      border: 0;
+    }
+
+    .loading:not(:required):after {
+      content: '';
+      display: block;
+      font-size: 10px;
+      width: 1em;
+      height: 1em;
+      margin-top: -0.5em;
+      -webkit-animation: spinner 1500ms infinite linear;
+      -moz-animation: spinner 1500ms infinite linear;
+      -ms-animation: spinner 1500ms infinite linear;
+      -o-animation: spinner 1500ms infinite linear;
+      animation: spinner 1500ms infinite linear;
+      border-radius: 0.5em;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+      box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+    }
+
+    /* Animation */
+
+    @-webkit-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @-moz-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @-o-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    input[type="text"],
+    input[type="range"],
+    textarea {
+      outline: none;
+      box-shadow: none !important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="starting">
+    <div class="container">
+      <div class="row">
+        <h1>The Place I Have Ever Been To.
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addplaceModal">Add</button>
+        </h1>
+        &emsp;
+        <!-- <div class="form-inline my-2 my-lg-0" style="margin-left: 20%;">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" v-model="search_term" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" v-on:click.prevent="getplaces()">Search</button>
+          </div> -->
+        <table class="table" id="table" data-toggle="table" data-pagination="true" data-search="true">
+          <thead>
+            <tr>
+              <th scope="col" data-sortable="true">Index</th>
+              <th scope="col" data-sortable="true">ID</th>
+              <th scope="col" data-sortable="true">Date</th>
+              <th scope="col" data-sortable="true">City</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Address</th>
+              <th scope="col" data-sortable="true">Rating</th>
+              <th scope="col">Tags</th>
+              <th scope="col">Notes</th>
+              <th scope="col" data-searchable="false"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(place,index) in places">
+              <td scope="row">${index+1}</td>
+              <td scope="row">${place.id}</td>
+              <td>${place.date}</td>
+              <td>${place.city}</td>
+              <td>${place.destination}</td>
+              <td>${place.address}</td>
+              <td>${place.rating + '★'}</td>
+              <td><a v-for="tag in place.tags" :key="tag" class="text-info">${tag}<br></a></td>
+              <td>${place.notes}</td>
+              <td>
+                <button class="btn btn-info" v-on:click="getplace(place.id)">Edit</button>
+                <button class="btn btn-danger" v-on:click="deleteplace(place.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Add place Modal -->
+        <div class="modal fade" id="addplaceModal" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form v-on:submit.prevent="addplace()">
+
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <select class="form-control" id="city" v-model="newplace.city">
+                      <optgroup v-for="(city,key) in cities" :label='key'>
+                        <option v-for="(key,value) in city" :value="value" required="required">${key}</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" class="form-control" id="destination" name="destination" placeholder="plz input your destination"
+                      v-model="newplace.destination" required="required">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="text" class="form-control" id="date" placeholder="Date" v-model="newplace.date"
+                      required="required">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="body">Address</label>
+                    <textarea class="form-control" id="address" placeholder="plz input your address" v-model="newplace.address"
+                      required="required" rows="1"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <vue-tags-input v-model="tag" :tags="newplace.tags"
+                      @tags-changed="newTags => newplace.tags = newTags.map(tag => tag.text)" id="tags"
+                      placeholder="" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="rate">Rating(1-10)</label>
+                    <input type="range" min="1" max="10" step="1" class="form-control custom-range border-0" id="rate"
+                      placeholder="Rating" v-model="newplace.rate" name="irange" required="required"
+                      oninput="orange.value = irange.value + '★'">
+                    <input type="text" value="" name="orange" id="orange" class="border-0">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea class="form-control" id="notes" placeholder="" v-model="newplace.notes"
+                      rows="1"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="loading" v-if="loading===true">Waiting...&#8230;</div>
+        </div>
+        <!-- End of add place modal -->
+
+
+        <!-- Edit place Modal -->
+        <div class="modal fade" id="editplaceModal" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modify</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form v-on:submit.prevent="updateplace()">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <select class="form-control" id="city2" v-model="currentplace.city" autocomplete="off"
+                      :required="true">
+                      <optgroup v-for="(city,key) in cities" :label='key'>
+                        <template v-for="(key,value) in city">
+                          <option :value="value" v-if="currentplace.city==key" selected="selected">${key}</option>
+                          <option v-else :value="value">${key}</option>
+                        </template>
+                      </optgroup>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" class="form-control" id="destination2" name="destination" placeholder="plz input your destination"
+                      v-model="currentplace.destination" required="required">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="text" class="form-control" id="date2" placeholder="Date" v-model="currentplace.date"
+                      required="required">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="body">address</label>
+                    <textarea class="form-control" id="address2" placeholder="plz input your address" v-model="currentplace.address"
+                      required="required" rows="1"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <vue-tags-input v-model="tag" :tags="currentplace.tags"
+                      @tags-changed="newTags => currentplace.tags = newTags.map(tag => tag.text)" id="tags2"
+                      placeholder="" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="rate">Rating(1-10)</label>
+                    <input type="range" min="1" max="10" step="1" value="7" class="form-control custom-range border-0"
+                      id="rate2" placeholder="Rating" v-model="currentplace.rate" name="irange" required="required"
+                      oninput="orange.value = irange.value + '★'">
+                    <input type="text" value="" name="orange" id="orange2" class="border-0"
+                      v-model="currentplace.rate">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="notes">笔记</label>
+                    <textarea class="form-control" id="notes2" placeholder="" v-model="currentplace.notes"
+                      rows="1"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="loading" v-if="loading===true">Waiting...&#8230;</div>
+        </div>
+        <!-- End of edit place modal -->
+
+      </div>
+    </div>
+    <div class="loading" v-if="loading===true">Waiting...&#8230;</div>
+
+  </div>
+
+  <!-- bootrtap js files -->
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="https://cdn.bootcss.com/popper.js/1.15.0/popper.min.js"></script> -->
+  <script src="https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> -->
+  <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.js"></script>
+
+
+  <!-- vue.js files -->
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
+  <script src="https://unpkg.com/@johmun/vue-tags-input/dist/vue-tags-input.js"></script>
+  <!-- <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-vue.min.js"></script> -->
+
+  <script type="text/javascript">
+    Vue.http.headers.common['X-CSRFToken'] = "{{ csrf_token }}";
+    new Vue({
+      el: '#starting',
+      delimiters: ['${', '}'],
+      data: {
+        places: [],
+        loading: true,
+        currentplace: {},
+        message: null,
+        newplace: { 'city': "jgq", 'date': new Date().toISOString().split('T')[0], 'destination': "", 'address': "", 'rating': 7, 'tags': [], 'notes': null },
+        search_term: '',
+        tag: '',
+        cities: {
+          '杭州': { 'yhq': '余杭区', 'xsq': '萧山区', 'bjq': '滨江区', 'xhq': '西湖区', 'gsq': '拱墅区', 'jgq': '江干区', 'xcq': '下城区', 'scq': '上城区' },
+          '嘉兴': { 'hn': '海宁市', 'tx': '桐乡市', 'hy': '海盐县', 'ph': '平湖市', 'js': '嘉善县', 'nhq': '南湖区', 'xzq': '秀洲区' },
+          '湖州': { 'dq': '德清县', 'nxq': '南浔区', 'wxq': '吴兴区', 'cx': '长兴县' },
+          '苏州': { 'wjq': '吴江区' },
+          '绍兴': { 'vhs': '越城区', 'dvd': '柯桥区', 'syq': '上虞区' },
+          '上海': { 'jsq': '金山区' },
+        },
+      },
+      mounted: function () {
+        this.getplaces();
+      },
+      methods: {
+        getplaces: function () {
+          let api_url = '/api/place/';
+          if (this.search_term !== '' || this.search_term !== null) {
+            api_url = `/api/place/?search=${this.search_term}`
+          }
+          this.loading = true;
+          this.$http.get(api_url)
+            .then((response) => {
+              this.places = response.data;
+              this.loading = false;
+            })
+            .catch((err) => {
+              this.loading = false;
+              console.log(err);
+            })
+        },
+        getplace: function (id) {
+          this.loading = true;
+          this.$http.get(`/api/place/${id}/`)
+            .then((response) => {
+              this.currentplace = response.data;
+              $("#editplaceModal").modal('show');
+              this.loading = false;
+            })
+            .catch((err) => {
+              this.loading = false;
+              console.log(err);
+            })
+        },
+        addplace: function () {
+          this.loading = true;
+          this.$http.post('/api/place/', this.newplace)
+            .then((response) => {
+              this.loading = true;
+              this.getplaces();
+            })
+            .catch((err) => {
+              this.loading = true;
+              console.log(err);
+            })
+        },
+        updateplace: function () {
+          this.loading = true;
+          this.$http.put(`/api/place/${this.currentplace.id}/`, this.currentplace)
+            .then((response) => {
+              this.loading = false;
+              this.currentplace = response.data;
+              this.getplaces();
+            })
+            .catch((err) => {
+              this.loading = false;
+              console.log(err);
+            })
+        },
+        deleteplace: function (id) {
+          this.loading = true;
+          this.$http.delete(`/api/place/${id}/`)
+            .then((response) => {
+              this.loading = false;
+              this.getplaces();
+            })
+            .catch((err) => {
+              this.loading = false;
+              console.log(err);
+            })
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
+from .routers import router
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('crud/', TemplateView.as_view(template_name='place.html')),
     # path('users/', include('django.contrib.auth.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('pages.urls')),

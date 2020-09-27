@@ -1,5 +1,7 @@
 # django-skeleton-cat
 
+![](https://img.shields.io/github/stars/joaxin/django-skeleton-cat) ![](https://img.shields.io/github/forks/joaxin/django-skeleton-cat) ![](https://img.shields.io/github/issues/joaxin/django-skeleton-cat) ![](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Fjoaxin%2Fdjango-skeleton-cat)
+
 A template for launching new Django projects quickly. 
 
 - django-skeleton-cat : Use django Social authentication via django-allauth : https://github.com/pennersr/django-allauth
@@ -7,11 +9,11 @@ A template for launching new Django projects quickly.
 
 ## Screenshots
 
-![main](shots/main.png)
+![main](django-skeleton-cat/shots/main.png)
 
-![sign_up](shots/sign_up.png)
+![sign_up](django-skeleton-cat/shots/sign_up.png)
 
-![admin](shots/admin.png)
+![admin](django-skeleton-cat/shots/admin.png)
 
 ## Features
 
@@ -52,7 +54,7 @@ Create a superuser:
 
 ```
 python manage.py createsuperuser
-test/test
+test/test/test@test.com
 ```
 
 Run:

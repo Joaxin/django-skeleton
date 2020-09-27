@@ -47,11 +47,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'crispy_forms',
     'debug_toolbar',
-    # 'rest_framework',
+    'taggit',
+    'rest_framework',
 
     # Local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
+    'place.apps.PlaceConfig',
 ]
 
 SITE_ID = 1
