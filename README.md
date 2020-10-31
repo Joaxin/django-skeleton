@@ -4,8 +4,13 @@
 
 A template for launching new Django projects quickly. 
 
-- django-skeleton-cat : Use django Social authentication via django-allauth : https://github.com/pennersr/django-allauth
-- django-skeleton-simple-cat : Use django built-in authentication system.
+- django-skeleton-cat-allauth : Use django Social authentication via django-allauth : https://github.com/pennersr/django-allauth
+
+- django-skeleton-cat-simple: Use django built-in authentication system via `django.contrib.auth`.
+
+  `username`，`password`，`email`，`first_name`，`last_name`，`is_active`
+
+- django-skeleton-cat-registration: Use django-registration system via: https://django-registration.readthedocs.io/en/latest/
 
 ## Screenshots
 
@@ -37,13 +42,13 @@ Comes with a complete user authentication flow, custom user model, and social au
 
 setup a `virtualenv` if needed
 
-```
+```bash
 mkdir env
 virtualenv dj
 source dj/bin/activate
 ```
 
-```
+```bash
 cd yourproject
 pip install -r requirements.txt
 python manage.py makemigrations users
@@ -52,9 +57,10 @@ python manage.py migrate
 
 Create a superuser:
 
-```
+```bash
 python manage.py createsuperuser
-test/test/test@test.com
+test/test/test@test.com ==> test7...
+luna/luna7.../luna@test.com
 ```
 
 Run:
@@ -65,23 +71,87 @@ python manage.py runserver
 
 Load the site at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-### Authentication URL
+## Authentication URL
 
-Defualt:
+> https://docs.djangoproject.com/en/3.1/topics/auth/default/
 
+### Defualt (django.contrib.auth.views)
+
+```python
+urlpatterns = [
+    path('users/', include('django.contrib.auth.urls')),
+]
 ```
+
+This will include the following URL patterns:
+
+```python
+LoginView
 users/ login/ [name='login']
-users/ logout/ [name='logout']
-users/ password_change/ [name='password_change']
-users/ password_change/done/ [name='password_change_done']
-users/ password_reset/ [name='password_reset']
-users/ password_reset/done/ [name='password_reset_done']
-users/ reset/<uidb64>/<token>/ [name='password_reset_confirm']
-users/ reset/done/ [name='password_reset_complete']
-```
-Django-allauth:
+Defaults to registration/login.html
 
+LogoutView
+users/ logout/ [name='logout']
+Defaults to registration/logged_out.html.
+
+PaswordChangeView
+users/ password_change/ [name='password_change']
+Defaults to registration/password_change_form.html
+
+PasswordChangeDoneView
+users/ password_change/done/ [name='password_change_done']
+Defaults to registration/password_change_done.html
+
+PasswordResetView
+users/ password_reset/ [name='password_reset']
+Defaults to registration/password_reset_form.html
+
+PasswordResetDoneView
+users/ password_reset/done/ [name='password_reset_done']
+Defaults to registration/password_reset_done.html
+
+PasswordResetConfirmView
+users/ reset/<uidb64>/<token>/ [name='password_reset_confirm']
+Defaults to registration/password_reset_confirm.html.
+
+PasswordResetCompleteView
+users/ reset/done/ [name='password_reset_complete']
+Defaults to registration/password_reset_complete.html
 ```
+
+If you want more control over your URLs, you can reference a specific view in your URLconf:
+
+```python
+from django.contrib.auth import views as auth_views
+urlpatterns = [
+  path('login/',auth_views.LoginView.as_view(),name='login'),
+    ...
+]
+```
+
+The views have optional arguments you can use to alter the behavior of the view. 
+
+For example, if you want to change the template name a view uses, you can provide the `template_name` argument. A way to do this is to provide keyword arguments in the URLconf, these will be passed on to the view. For example:
+
+```python
+path('logout/',
+    auth_views.LogoutView.as_view(
+        template_name='registration/logged_out.html',
+        next_page=None
+    ),
+    name = 'logout'
+)
+urlpatterns = [
+    path(
+        'change-password/',
+        auth_views.PasswordChangeView.as_view(template_name='registration/change-password.html'),
+    ),
+]
+```
+
+### Django-allauth
+
+```python
 accounts/ ^ ^signup/$ [name='account_signup']
 accounts/ ^ ^login/$ [name='account_login']
 accounts/ ^ ^logout/$ [name='account_logout']
