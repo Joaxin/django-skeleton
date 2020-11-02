@@ -59,8 +59,11 @@ Create a superuser:
 
 ```bash
 python manage.py createsuperuser
+# A user with that username already exists.
 test/test/test@test.com ==> test7...
-luna/luna7.../luna@test.com
+luna/luna/luna@test.com
+luna2/luna2/luna2@test.com
+luna3/...
 ```
 
 Run:
