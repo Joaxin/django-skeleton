@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'taggit',
     'rest_framework',
+    'django_filters',
 
     # Local
     'users.apps.UsersConfig',
@@ -91,7 +92,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'skeleton.wsgi.application'
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

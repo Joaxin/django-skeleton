@@ -14,29 +14,40 @@ A template for launching new Django projects quickly.
 
 ## Screenshots
 
-![main](django-skeleton-cat/shots/main.png)
+![main](shots/main.png)
 
-![sign_up](django-skeleton-cat/shots/sign_up.png)
+![sign_up](shots/sign_up.png)
 
-![admin](django-skeleton-cat/shots/admin.png)
+![admin](shots/admin.png)
 
 ## Features
 
 Comes with a complete user authentication flow, custom user model, and social authentication options via Gmail, Facebook, Twitter, etc.
 
 - For Django>=2.2 and Python>=3.7
-
-- Styling with Bootstrap v4.5.0 : https://github.com/twbs/bootstrap
-
-- Custom user model
-
+- Styling with Bootstrap v4.5.0 : https://github.com/twbs/bootstrap via django-crispy-forms
 - Email/password for log in/sign up instead of Django's default username/email/password pattern
-
 - django-debug-toolbar : https://github.com/jazzband/django-debug-toolbar
-
 - support for ~~django-suit~~  django-simpleui
-
 - Support fontawesome 5.1: https://fontawesome.com/icons?d=gallery&q=cat&m=free
+
+For django-skeleton-cat-allauth:
+
+- Use django Social authentication via django-allauth 
+- Support DRF(DjangoRestFramework)
+- An CRUD demo with DRF
+- Custom user model
+- Still building…..
+
+For django-skeleton-cat-simple:
+
+- Use django built-in authentication system
+- Extended user model
+
+For django-skeleton-cat-registration:
+
+- Use django-registration system 
+- Still building…..
 
 ## First-time setup
 
@@ -52,6 +63,7 @@ source dj/bin/activate
 cd yourproject
 pip install -r requirements.txt
 python manage.py makemigrations users
+python manage.py makemigrations images
 python manage.py migrate
 ```
 
@@ -174,7 +186,7 @@ accounts/ ^ ^password/reset/key/done/$ [name='account_reset_password_from_key_do
 
 - Use [PostgreSQL locally via Docker](https://wsvincent.com/django-docker-postgresql/)
 - Use [django-environ](https://github.com/joke2k/django-environ) for environment variables
-- Update [EMAIL_BACKEND](https://docs.djangoproject.com/en/2.2/topics/email/#module-django.core.mail) to configure an SMTP backend
+- Update [EMAIL_BACKEND](https://docs.djangoproject.com/en/3.1/topics/email/#module-django.core.mail) to configure an SMTP backend
 - Make the [admin more secure](https://opensource.com/article/18/1/10-tips-making-django-admin-more-secure)
 
 ## Adding Social Authentication

@@ -25,7 +25,7 @@ SECRET_KEY = 'xc3=e7kw8lr+pbjo+3g_x++hs4n3rij2=$s=ygu$+$9fp!@^t2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['localhost','127.0.0.1','2fe1ff6680e0.ngrok.io','license.sublimehq.com']
 
 
 # Application definition
@@ -149,6 +149,11 @@ USE_TZ = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# AUTHENTICATION
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'users.authentication.EmailAuthBackend',
+]
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
@@ -167,10 +172,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-# Auth 
-# AUTH_USER_MODEL = 'users.CustomUser'
 
 # CRISPY FORMS
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
